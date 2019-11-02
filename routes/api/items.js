@@ -8,7 +8,7 @@ const Item = require('../../models/Item');
 let q = 'chicken';
 let calories = '500-1000';
 let from = '0';
-let to = '3';
+let to = '100';
 let health = 'alcohol-free';
 
 // @route  GET api/items
@@ -19,11 +19,12 @@ router.get('/', (req, res) => {
         .sort({ date: -1})
         .then(items => res.json(items))*/
 
-    fetch('https://api.edamam.com/search?q=chicken&app_id=15d5461b&app_key=9b07e3daa8efced35252066252893cb3&from=0&to=3&calories=591-722&health=alcohol-free')
+    fetch('https://api.edamam.com/search?q=chicken&app_id=15d5461b&app_key=9b07e3daa8efced35252066252893cb3&from=0&to=50&calories=591-722&health=alcohol-free')
     .then(res => res.text())
     .then(data => {
-        console.log(data);
-        console.log("yay");
+        //console.log(data);
+        //console.log("yay");
+        res.send(data);
     })
     .catch(err => console.log(data))
 });
