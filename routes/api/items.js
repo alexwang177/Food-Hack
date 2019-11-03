@@ -5,53 +5,30 @@ const fetch = require("node-fetch");
 // Item Model
 const Item = require('../../models/Item');
 
-let q = 'chicken';
-let calories = '500-1000';
-let from = '0';
-let to = '100';
-let health = 'alcohol-free';
-
-// @route  GET api/items
+// @route  POST api/items
 // @desc   Get All Items
 // @access Public
-router.get('/', (req, res) => {
-    /*Item.find()
-        .sort({ date: -1})
-        .then(items => res.json(items))*/
+router.post('/', (req, res) => {
 
-    // 'https://api.edamam.com/search?q=chicken&app_id=15d5461b&app_key=9b07e3daa8efced35252066252893cb3&from=0&to=50&calories=591-722&health=alcohol-free'
+    let carbs = req.body.carbs;
+    let protein = req.body.protein;
+    let calories = req.body.calories;
+    let sodium = req.body.sodium;
+    let fat = req.body.fat;
+    let test = req.body.test;
 
-    fetch('https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=50&apiKey=e873cb404dd546f4bf8f22d23f8ac51a')
+    console.log(req.body.test);
+
+    //https://api.spoonacular.com/recipes/findByNutrients?minCarbs=${carbs-10}&maxCarbs=${carbs+10}&minProtein=${protein-10}&maxProtein=${protein+10}&minFat=${fat-10}&maxFat=${fat+10}&minCalories=${calories-10}&maxCalories=${calories+10}&minSodium=${sodium-10}&maxSodium=${sodium+10}number=50&apiKey=e873cb404dd546f4bf8f22d23f8ac51a`
+
+    fetch(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=${carbs-10}&number=10&apiKey=e64c0a89a2994abdb4b68b0964c3e7b4`)
     .then(res => res.json())
     .then(data => {
-        console.log(data);
-        //console.log("yay");
         res.send(data);
     })
-    .catch(err => console.log(data))
+    .catch(err => {
+        console.log(err);
+    })
 });
-
-// @route  POST api/items
-// @desc   Create An Item
-// @access Public
-/*router.post('/', (req, res) => {
-    const newItem = new Item({
-        name: req.body.name,
-        college: req.body.college,
-        date: req.body.date,
-        email: req.body.email
-    });
-
-    newItem.save().then(item => res.json(item));
-});*/
-
-// @route  DELETE api/items/:id
-// @desc   Delete An Item
-// @access Public
-/*router.delete('/:id', (req, res) => {
-    Item.findById(req.params.id)
-        .then(item => item.remove().then(() => res.json({success: true})))
-        .catch(err => res.status(404).json({success: false}))
-});*/
 
 module.exports = router;

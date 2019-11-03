@@ -1,20 +1,38 @@
 const button = document.getElementById('submit');
 const recipeList = document.getElementById('recipeList');
 
+const calories = document.getElementById('calories');
+const fat = document.getElementById('fat');
+const protein = document.getElementById('protein');
+const carbohydrates = document.getElementById('carbohydrates');
+const sodium = document.getElementById('sodium');
+
 var recipeArray = [];
 
+var a = carbohydrates.value;
+
 function getRecipes(){
+
+    a = carbohydrates.value;
+    console.log("data" + a);
+
     fetch('http://localhost:5000/api/items', {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'cache-control': 'no-cache'
         },
+        body: JSON.stringify({
+            carbs: a,
+            fat: fat.value,
+            protein: carbohydrates.value,
+            sodium: sodium.value,
+            calories: calories.value,
+            test: '50'
+        })
     }).then(res => res.json())
     .then(data => {
-        //console.log(data);
-        //recipeList.innerHTML = data;
         recipeArray = data;
         console.log(recipeArray);
         displayRecipes();
@@ -24,6 +42,8 @@ function getRecipes(){
 
 function displayRecipes(){
     if(recipeArray.length > 0){
+        recipeList.innerHTML = ``;
+
         var myList = document.createElement('ul');
         myList.className = 'list';
 
@@ -78,7 +98,7 @@ function displayRecipes(){
     }
     else{
       // Create a text node with the message
-      var message = document.createTextNode("No Recipes Found");
+      var message = document.createTextNode("No Recipes Found" + a);
 
       // Append the message to the container
       recipeList.appendChild(message);

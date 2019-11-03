@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Food Hack</title>
@@ -10,12 +11,46 @@
   <body>
     <h1 style="margin-top:10px" class="center">Food Hack</h1>
     <main>
-      <div id='getStarted'>
-        <button id='submit' onclick="getRecipes()" class="m-2 btn btn-primary btn-lg">Get Started</button>
+      <!-- Clicking this button will open the modal -->
+      <div id="modal_opener_container">
+        <button id="modal_opener">Get Started! 😛</button>
       </div>
+
       <div id='recipeList'>
       </div>
+
+      <div class="modal" style="display: none">
+        <div class="overlay"></div>
+        <div class="modal_content">
+          <!-- Dynamic Section -->
+          <h2>Search by Nutritional Goodness</h2>
+          <h2>Enter values for one meal</h2>
+          <form>
+              <div class="form-group">
+                
+                <input type="text" class="form-control" id="calories" placeholder="# of calories...">
+                
+                <input type="text" class="form-control" id="fat" placeholder="Fat (g)">
+                
+                <input type="text" class="form-control" id="carbohydrates" placeholder="Carbohydrates (g)">
+               
+                <input type="text" class="form-control" id="protein" placeholder="Protein (g)">
+                
+                <input type="text" class="form-control" id="sodium" placeholder="Sodium (g)">
+
+                <button  id="submitButton" type="button" class="btn btn-primary" onclick="getRecipes()">Submit</button>
+              <div>
+          </form>
+          <!-- End of Dynamic Section -->
+          <button title="Close" class="close_modal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+
     </main>
+    <!-- Main script Import -->
+    <script src="./modal.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

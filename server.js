@@ -8,11 +8,11 @@ const items = require('./routes/api/items');
 
 const app = express();
 
-app.use(cors());
-
 // Bodyparse Middleware
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json({type: "*/*"}));
+
+app.use(cors());
 
 // DB config
 const db = require('./config/keys').mongoURI;
