@@ -48,8 +48,8 @@ function displayRecipes(){
         myList.className = 'list';
 
         for(var i = 0; i < recipeArray.length; i++){
-        
-            // create list item for every element 
+
+            // create list item for every element
             var listItem = document.createElement("li");
             listItem.className = "card";
             listItem.style = "display: inline-flex; margin: 5px; width: 20rem; height: 25rem;";
@@ -78,7 +78,7 @@ function displayRecipes(){
 
             // create a text node to store value
             var listValue = document.createTextNode(recipeArray[i].title + " " + Math.round(recipeArray[i].calories));
-            
+
             // Appending...
             listItem.appendChild(img);
 
@@ -86,20 +86,20 @@ function displayRecipes(){
             cardBody.appendChild(link);
 
             listItem.appendChild(cardBody);
-            
+
             // append the list item in the list
             myList.appendChild(listItem);
         }
-        
+
         // append the list in the container
         //recipeList.style = "display: flex; justify-content: center;";
         recipeList.appendChild(myList);
-      
+
     }
     else{
       // Create a text node with the message
       var message = document.createTextNode("No Recipes Found" + a);
-      
+
       // Append the message to the container
       //recipeList.appendChild(message);   
       alert("No Recipes Found"); 
