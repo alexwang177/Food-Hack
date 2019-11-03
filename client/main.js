@@ -34,6 +34,7 @@ function getRecipes(){
     }).then(res => res.json())
     .then(data => {
         recipeArray = data;
+        console.log(recipeArray);
         displayRecipes();
     })
     .catch(err => console.log(err));

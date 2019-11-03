@@ -10,14 +10,14 @@ const Item = require('../../models/Item');
 // @access Public
 router.post('/', (req, res) => {
 
-    let carbs = req.carbs;
-    let protein = req.protein;
-    let calories = req.calories;
-    let sodium = req.sodium;
-    let fat = req.fat;
-    let test = req.test;
+    let carbs = req.body.carbs;
+    let protein = req.body.protein;
+    let calories = req.body.calories;
+    let sodium = req.body.sodium;
+    let fat = req.body.fat;
+    let test = req.body.test;
 
-    console.log("test " + test);
+    console.log(req.body.test);
 
     //https://api.spoonacular.com/recipes/findByNutrients?minCarbs=${carbs-10}&maxCarbs=${carbs+10}&minProtein=${protein-10}&maxProtein=${protein+10}&minFat=${fat-10}&maxFat=${fat+10}&minCalories=${calories-10}&maxCalories=${calories+10}&minSodium=${sodium-10}&maxSodium=${sodium+10}number=50&apiKey=e873cb404dd546f4bf8f22d23f8ac51a`
 
