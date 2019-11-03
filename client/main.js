@@ -16,7 +16,7 @@ function getRecipes(){
     a = carbohydrates.value;
     console.log("data" + a);
 
-    fetch('/api/items', {
+    fetch('http://localhost:5000/api/items', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -49,19 +49,24 @@ async function displayRecipes(){
 
         for(var i = 0; i < recipeArray.length; i++){
             //fetch price for recipe
-            
 
             const res = await fetch(`https://api.spoonacular.com/recipes/${recipeArray[i].id}/priceBreakdownWidget.json?apiKey=e64c0a89a2994abdb4b68b0964c3e7b4`);
             const json = await res.json();
             let price = json.totalCost / 100;
             price = Math.round(100 * price) / 100;
 
+            /*fetch(`https://api.spoonacular.com/recipes/${recipeArray[i].id}/priceBreakdownWidget.json?apiKey=e64c0a89a2994abdb4b68b0964c3e7b4`)
+            .then(res => res.json())
+            .then(data => {
+                price = data.totalCost;
+            })*/
+
             //Math.round(100*X)/100;
 
             // create list item for every element
             var listItem = document.createElement("li");
             listItem.className = "card";
-            listItem.style = "display: inline-flex; margin: 5px; width: 20rem; height: 34rem;";
+            listItem.style = "display: inline-flex; margin: 5px; width: 20rem; height: 40rem;";
 
             // create img for every element
             var img = document.createElement("img");
@@ -76,6 +81,10 @@ async function displayRecipes(){
             // create card title for every element
             var cardTitle = document.createElement("h5");
             cardBody.className = "card-title"
+
+            // create card info and sentiment data
+
+            var sentimentData = averageSentiment(recipeArray[i].tweets);
             
             var cardInfo = document.createElement("div");
             cardInfo.className = 'card-text';
@@ -86,6 +95,9 @@ async function displayRecipes(){
             <p style="font-size:12px">Fat: ${recipeArray[i].fat}<p>
             <p style="font-size:12px">Sodium: ${recipeArray[i].sodium}<p>
             <p style="font-size:12px">Price: $${price}<p>
+            <p style="font-size:12px">Positive Reviews: ${Math.round(sentimentData[0])}%<p>
+            <p style="font-size:12px">Neutral Reviews: ${Math.round(sentimentData[1])}%<p>
+            <p style="font-size:12px">Negative Reviews: ${Math.round(sentimentData[2])}%<p>
              `;
 
             // create a text node to store value
@@ -101,6 +113,8 @@ async function displayRecipes(){
 
             // append the list item in the list
             myList.appendChild(listItem);
+
+    
         }
 
         // append the list in the container
@@ -116,4 +130,28 @@ async function displayRecipes(){
       //recipeList.appendChild(message);   
       alert("No Recipes Found"); 
     }
+
+    averageSentiment = (dataSet) => {
+        let p = 0;
+        let neutral = 0;
+        let n = 0;
+    
+        dataSet.forEach((tweet) => {
+          if(tweet.sentiment.score > 0)
+            p++;
+          else if(tweet.sentiment.score === 0)
+            neutral++;
+          else if(tweet.sentiment.score < 0)
+            n++;
+        })
+    
+        let sum = 1;
+        sum = p + neutral + n;
+    
+        if(isNaN(p/sum))
+          return [0, 0, 0];
+        
+        return [(p/sum) * 100, (neutral/sum) * 100, (n/sum) * 100];
+        //return [sp, p, neutral, n, sn];
+      }
 }

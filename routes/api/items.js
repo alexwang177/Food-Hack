@@ -5,6 +5,28 @@ const fetch = require("node-fetch");
 // Item Model
 const Item = require('../../models/Item');
 
+//Twit Init
+var Twit = require('twit'); 
+var Sentiment = require('sentiment');
+
+const API_KEY = 'xFUQcmUlDuf7S3dWflFs4ZXvc';
+const API_SECRET = '7lb6EMeGOkHPr4bKEFThb38903BbZmfrnJPtgjWKj0zm4E2f3u';
+const ACCESS_TOKEN = '2557605158-UhRurcnRflE7mWH0NsSchhbDZM50PWIulvLdw7b';
+const ACCESS_SECRET = 'VZr0tZuG2zlbGsXnGI8LvXj89eF6HOsicsSQ2JFxwimJg';
+
+//Twitter Setup
+var T = new Twit({
+  consumer_key:         API_KEY,
+  consumer_secret:      API_SECRET,
+  access_token:         ACCESS_TOKEN,
+  access_token_secret:  ACCESS_SECRET,
+  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+  strictSSL:            true,     // optional - requires SSL certificates to be valid.
+})
+
+var sentiment = new Sentiment();
+var payLoad = [];
+
 // @route  POST api/items
 // @desc   Get All Items
 // @access Public
@@ -56,11 +78,37 @@ router.post('/', (req, res) => {
     fetch(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=${carbs-10}&maxCarbs=${maxCarbs}&minProtein=${protein-10}&maxProtein=${maxProtein}&minFat=${fat-10}&maxFat=${maxFat}&minSodium=${sodium-10}&maxSodium=${maxSodium}&minCalories=${calories-10}&maxCalories=${maxCalories}&number=10&apiKey=e64c0a89a2994abdb4b68b0964c3e7b4`)
     .then(res => res.json())
     .then(data => {
-        res.send(data);
+        payLoad = [];
+        data.map((recipeEntry) => {
+            let arr = recipeEntry.title.split(' ');
+
+            let query = '';
+
+            for(i = 0; i < arr.length-1; i++){
+                query += arr[i] + ' OR ';
+            }
+
+            query += arr[arr.length-1];
+            console.log(query);
+
+            T.get('search/tweets', { q: query, count: 100}, function(err, data, response) {
+                //console.log(data);
+                recipeEntry["tweets"] = data.statuses.map((tweet) => {
+                    return {'text': tweet.text,
+                            'sentiment': sentiment.analyze(tweet.text),
+                            'id': tweet.id
+                            }
+                })
+                
+                payLoad.push(recipeEntry);
+            })
+        })
     })
     .catch(err => {
         console.log(err);
     })
+
+    res.send(payLoad);
 });
 
 module.exports = router;
