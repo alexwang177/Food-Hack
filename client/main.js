@@ -52,7 +52,7 @@ function displayRecipes(){
             // create list item for every element
             var listItem = document.createElement("li");
             listItem.className = "card";
-            listItem.style = "display: inline-flex; margin: 5px; width: 20rem; height: 25rem;";
+            listItem.style = "display: inline-flex; margin: 5px; width: 20rem; height: 30rem;";
 
             // create img for every element
             var img = document.createElement("img");
@@ -67,23 +67,26 @@ function displayRecipes(){
             // create card title for every element
             var cardTitle = document.createElement("h5");
             cardBody.className = "card-title"
-            cardTitle.innerHTML = recipeArray[i].title;
-
-            // create link for every element
-            var link = document.createElement("a");
-            link.className = "btn btn-primary";
-            link.href = "#";
-            link.innerHTML = "More Info";
-            link.target = "_blank";
+            
+            var cardInfo = document.createElement("div");
+            cardInfo.className = 'card-text';
+            cardInfo.innerHTML = `<h5>${recipeArray[i].title}<h5>
+            <p style="font-size:12px">Calories: ${recipeArray[i].calories}<p>
+            <p style="font-size:12px">Carbs: ${recipeArray[i].carbohydrates}<p>
+            <p style="font-size:12px">Protein: ${recipeArray[i].protein}<p>
+            <p style="font-size:12px">Fat: ${recipeArray[i].fat}<p>
+            <p style="font-size:12px">Sodium: ${recipeArray[i].sodium}<p>
+             `;
 
             // create a text node to store value
-            var listValue = document.createTextNode(recipeArray[i].title + " " + Math.round(recipeArray[i].calories));
+            //var listValue = document.createTextNode(recipeArray[i].title + " " + Math.round(recipeArray[i].calories));
+
 
             // Appending...
             listItem.appendChild(img);
 
             cardBody.appendChild(cardTitle);
-            cardBody.appendChild(link);
+            cardBody.appendChild(cardInfo);
 
             listItem.appendChild(cardBody);
 
