@@ -2,6 +2,7 @@ h1.center {
   text-align: center;
 }
 
+
 /* Dropdown Button */
 .dropbtn {
   background-color: #3498DB;
@@ -22,6 +23,7 @@ h1.center {
   position: relative;
   display: inline-block;
 }
+
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
@@ -87,7 +89,7 @@ body {
   cursor: pointer;
   background: #469fdb;
 }
-  
+
 #modal_opener::after {
   content: "";
   display: block;
@@ -170,4 +172,12 @@ body {
 
 .p{
   font-size: 10px;
+}
+
+.center-vcenter {
+  margin: 0 auto;
+  width: 50%;
+  text-align: center;
+  margin-top: 6em;
+  /* vertical-align: middle; */
 }
