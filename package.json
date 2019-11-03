@@ -4,7 +4,6 @@
   "description": "App that suggests recipes to meet nutritional needs",
   "main": "server.js",
   "scripts": {
-    "client-install": "cd client && npm install",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
