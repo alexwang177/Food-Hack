@@ -32,6 +32,5 @@ function submitData() {
     const max = document.getElementById(`nutrient${i+1}`).getElementsByTagName("input")[1];
     userData.push([nutrient, min, max]);
   }
-  console.log("helloworld")
-  console.log(userData);
+  return userData;
 }
