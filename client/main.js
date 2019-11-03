@@ -24,9 +24,9 @@ function getRecipes(){
             'cache-control': 'no-cache'
         },
         body: JSON.stringify({
-            carbs: a,
+            carbs: carbohydrates.value,
             fat: fat.value,
-            protein: carbohydrates.value,
+            protein: protein.value,
             sodium: sodium.value,
             calories: calories.value,
             test: '50'
@@ -101,6 +101,7 @@ function displayRecipes(){
       var message = document.createTextNode("No Recipes Found" + a);
       
       // Append the message to the container
-      recipeList.appendChild(message);    
+      //recipeList.appendChild(message);   
+      alert("No Recipes Found"); 
     }
 }
