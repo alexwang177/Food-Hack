@@ -19,10 +19,12 @@ router.get('/', (req, res) => {
         .sort({ date: -1})
         .then(items => res.json(items))*/
 
-    fetch('https://api.edamam.com/search?q=chicken&app_id=15d5461b&app_key=9b07e3daa8efced35252066252893cb3&from=0&to=50&calories=591-722&health=alcohol-free')
-    .then(res => res.text())
+    // 'https://api.edamam.com/search?q=chicken&app_id=15d5461b&app_key=9b07e3daa8efced35252066252893cb3&from=0&to=50&calories=591-722&health=alcohol-free'
+
+    fetch('https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=50&apiKey=e873cb404dd546f4bf8f22d23f8ac51a')
+    .then(res => res.json())
     .then(data => {
-        //console.log(data);
+        console.log(data);
         //console.log("yay");
         res.send(data);
     })

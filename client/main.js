@@ -15,7 +15,7 @@ function getRecipes(){
     .then(data => {
         //console.log(data);
         //recipeList.innerHTML = data;
-        recipeArray = data.hits;
+        recipeArray = data;
         console.log(recipeArray);
         displayRecipes();
     })
@@ -23,8 +23,6 @@ function getRecipes(){
 }
 
 function displayRecipes(){
-    console.log(recipeArray.length)
-
     if(recipeArray.length > 0){
         var myList = document.createElement('ul');
         myList.className = 'list';
@@ -34,11 +32,11 @@ function displayRecipes(){
             // create list item for every element 
             var listItem = document.createElement("li");
             listItem.className = "card";
-            listItem.style = "width: 18rem; height: 25rem; margin: 5px; display: inline-flex";
+            listItem.style = "display: inline-flex; margin: 5px; width: 20rem; height: 25rem;";
 
             // create img for every element
             var img = document.createElement("img");
-            img.src = recipeArray[i].recipe.image;
+            img.src = recipeArray[i].image;
             img.alt = "..."
 
             // create card body for every element
@@ -49,16 +47,17 @@ function displayRecipes(){
             // create card title for every element
             var cardTitle = document.createElement("h5");
             cardBody.className = "card-title"
-            cardTitle.innerHTML = recipeArray[i].recipe.label;
+            cardTitle.innerHTML = recipeArray[i].title;
 
             // create link for every element
             var link = document.createElement("a");
             link.className = "btn btn-primary";
-            link.href = recipeArray[i].recipe.url;
-            link.innerHTML = "More Info"
+            link.href = "#";
+            link.innerHTML = "More Info";
+            link.target = "_blank";
 
             // create a text node to store value
-            var listValue = document.createTextNode(recipeArray[i].recipe.label + " " + Math.round(recipeArray[i].recipe.calories));
+            var listValue = document.createTextNode(recipeArray[i].title + " " + Math.round(recipeArray[i].calories));
             
             // Appending...
             listItem.appendChild(img);
@@ -73,7 +72,7 @@ function displayRecipes(){
         }
         
         // append the list in the container
-        recipeList.style = "text-align: center;";
+        //recipeList.style = "display: flex; justify-content: center;";
         recipeList.appendChild(myList);
       
     }
