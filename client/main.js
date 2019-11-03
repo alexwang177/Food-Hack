@@ -40,7 +40,7 @@ function getRecipes(){
     .catch(err => console.log(err));
 }
 
-function displayRecipes(){
+async function displayRecipes(){
     if(recipeArray.length > 0){
         recipeList.innerHTML = ``;
 
@@ -48,11 +48,20 @@ function displayRecipes(){
         myList.className = 'list';
 
         for(var i = 0; i < recipeArray.length; i++){
+            //fetch price for recipe
+            
+
+            const res = await fetch(`https://api.spoonacular.com/recipes/${recipeArray[i].id}/priceBreakdownWidget.json?apiKey=e64c0a89a2994abdb4b68b0964c3e7b4`);
+            const json = await res.json();
+            let price = json.totalCost / 100;
+            price = Math.round(100 * price) / 100;
+
+            //Math.round(100*X)/100;
 
             // create list item for every element
             var listItem = document.createElement("li");
             listItem.className = "card";
-            listItem.style = "display: inline-flex; margin: 5px; width: 20rem; height: 30rem;";
+            listItem.style = "display: inline-flex; margin: 5px; width: 20rem; height: 34rem;";
 
             // create img for every element
             var img = document.createElement("img");
@@ -72,15 +81,15 @@ function displayRecipes(){
             cardInfo.className = 'card-text';
             cardInfo.innerHTML = `<h5>${recipeArray[i].title}<h5>
             <p style="font-size:12px">Calories: ${recipeArray[i].calories}<p>
-            <p style="font-size:12px">Carbs: ${recipeArray[i].carbohydrates}<p>
+            <p style="font-size:12px">Carbs: ${recipeArray[i].carbs}<p>
             <p style="font-size:12px">Protein: ${recipeArray[i].protein}<p>
             <p style="font-size:12px">Fat: ${recipeArray[i].fat}<p>
             <p style="font-size:12px">Sodium: ${recipeArray[i].sodium}<p>
+            <p style="font-size:12px">Price: $${price}<p>
              `;
 
             // create a text node to store value
             //var listValue = document.createTextNode(recipeArray[i].title + " " + Math.round(recipeArray[i].calories));
-
 
             // Appending...
             listItem.appendChild(img);
