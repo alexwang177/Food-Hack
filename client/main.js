@@ -16,7 +16,7 @@ function getRecipes(){
     a = carbohydrates.value;
     console.log("data" + a);
 
-    fetch('http://localhost:5000/api/items', {
+    fetch('/api/items', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
