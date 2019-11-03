@@ -18,3 +18,7 @@ const ItemSchema = new Schema({
 });
 
 module.exports = Item = mongoose.model('item', ItemSchema);
+
+/*"server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""*/
